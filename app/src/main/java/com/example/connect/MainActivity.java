@@ -11,11 +11,13 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,8 +36,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private LinearLayout linearLayoutScanResults;
     private TextView textViewScanResults;
+    private FrameLayout frameSitings;
 
     private WifiBroadcastReceiver wifiReceiver;
+    private FragmentTransaction transaction;
 
     private Connect connect = new Connect();
 
@@ -48,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editText_password);
         textViewScanResults = findViewById(R.id.textView_scanResults);
         linearLayoutScanResults = findViewById(R.id.linearLayout_scanResults);
+        frameSitings = findViewById(R.id.frameSiting);
+        transaction = getSupportFragmentManager().beginTransaction();
+
 
         goIo();
 
@@ -55,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 askAndStartScanWifi();
+                transaction.add(R.id.frameSiting, new BlankFragment());
+                transaction.commit();
             }
         });
     }
@@ -64,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         this.wifiReceiver = new WifiBroadcastReceiver();
         registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         askAndStartScanWifi();
+        BlankFragment blankFragment = new BlankFragment();
+
     }
 
 

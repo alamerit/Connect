@@ -19,6 +19,11 @@
         app:layout_constraintStart_toEndOf="@+id/button_state"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <FrameLayout
+        android:id="@+id/frameSiting"
+        android:layout_width="match_parent"
+        android:layout_height="183dp" />
+
     <EditText
         android:id="@+id/editText_password"
         android:layout_width="202dp"
